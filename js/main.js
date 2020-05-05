@@ -60,6 +60,7 @@ function searchSeries(template, name, containerList) {
                 }
             }
             else {
+                //alert('Titolo non trovato tra la selezione di Serie Tv.');
                 console.log('Titolo non trovato tra la selezione di Serie Tv.');
                 name.select();
             }
@@ -101,6 +102,7 @@ function searchMovies(template, title, containerList) {
                 }
             }
             else {
+                //alert('Titolo non trovato tra la selezione di Film.');
                 console.log('Titolo non trovato tra la selezione di Film.');
                 title.select();
             }
