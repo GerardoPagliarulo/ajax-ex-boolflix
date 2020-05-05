@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href=" https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css">
     <link rel="stylesheet" href="css/main.css">
     <!-- JS -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'></script>
@@ -13,8 +14,8 @@
 <body>
 
     <header>
-        <input type="text" placeholder="Scrivi il titolo quì">
-        <button>Cerca</button>
+        <input class="search-movie" type="text" placeholder="Scrivi il titolo quì">
+        <button class="search-button">Cerca</button>
     </header>
 
     <main class="list-movies"></main>
@@ -23,13 +24,29 @@
 
 
         <!-- TEMPLATE HANDLEBARS -->
-        <script id="movie-template" type="text/x-handlebars-template">
-            <div class="movie">
+        <script id="movie-series-template" type="text/x-handlebars-template">
+            <div class="movie-series">
                 <ul>
-                    <li>Titolo: {{title}}</li>
-                    <li>Titolo originale: {{originalTitle}}</li>
-                    <li>Lingua originale: {{originalLanguage}}</li>
-                    <li>Voto: {{averageVote}}</li>
+                    <li>
+                        <span>Titolo:</span>
+                        <span>{{title}}</span>
+                    </li>
+                    <li>
+                        <span>Titolo originale:</span>
+                        <span>{{originalTitle}}</span>
+                    </li>
+                    <li>
+                        <span>Lingua originale:</span>
+                        {{{originalLanguage}}}
+                    </li>
+                    <li>
+                        <span>Voto:</span> 
+                        <a href="#" class="icon">{{{averageVote}}}</a> 
+                    </li>
+                    <li>
+                        <span>Tipo:</span>
+                        <span>{{tipo}}</span>
+                    </li>
                 </ul>
             </div>
         </script>
