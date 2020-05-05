@@ -12,7 +12,7 @@ $(document).ready( function () {
     // Ricerca film con click su bottone
     btnSearch.click( function () {
         if (title.val().trim() !== '') {
-            // Stampa serie tv ricercato
+            // Stampa serie tv ricercata
             searchSeries(template, title, moviesList);
             // Stampa film ricercato
             searchMovies(template, title, moviesList);
