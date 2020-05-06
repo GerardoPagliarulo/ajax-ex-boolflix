@@ -105,7 +105,7 @@ body {
     background-color: rgba(9, 7, 7, .6)
 }
 
-.movie-series img {
+.movie-series .poster {
     width: 100%;
     height: 100%;
     object-fit: cover;
