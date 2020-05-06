@@ -6,7 +6,7 @@ $(document).ready( function () {
     var title = $('.search-movie');
     var btnSearch = $('.search-button');
     var moviesList = $('.list-movies');
-    // API
+    // APIs
     var seriesApi = {
                         url: 'https://api.themoviedb.org/3/search/tv',
                         api_key: 'e99307154c6dfb0b4750f6603256716d',
@@ -31,6 +31,13 @@ $(document).ready( function () {
     btnSearch.click( function () {
         var query = title.val();
         showResult(seriesApi, moviesApi, query, title, template, moviesList);
+    });
+    // Hover sulle card e mostrare la descrizione
+    $('body').on('mouseenter', '.movie-series', function() {
+            $('.description', this).removeClass('disp-none');
+    });
+    $('body').on('mouseleave', '.movie-series', function() {
+        $('.description', this).addClass('disp-none');
     });
 }); // <-- End Doc Ready
 /************
@@ -99,7 +106,8 @@ function templatePrint(template, movies, containerList, type) {
             originalLanguage: languageFlag(item["original_language"]),
             averageVote: starVote(item["vote_average"]),
             type: type,
-            posterPath: posterImage(item["poster_path"])
+            posterPath: posterImage(item["poster_path"]),
+            overview: item["overview"].substr(0, 100)
         };
         // Compilare e aggiungere template
         var movie = template(content);
