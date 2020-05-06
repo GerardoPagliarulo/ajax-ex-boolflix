@@ -52,7 +52,7 @@ function showResult(seriesApi, moviesApi, query, title, template, moviesList) {
         title.val('');
     }
 }
-// Funzione: Selezionare Api corretta
+// Funzione: Selezionare Api
 function currentApi(myApi, query, template, moviesList) {
         $.ajax({
             url: myApi.url,
@@ -78,7 +78,7 @@ function currentApi(myApi, query, template, moviesList) {
             }
         });
     }    
-// Funzione: Ottenere dati templste e stampare template
+// Funzione: Ottenere dati template e stampare template
 function templatePrint(template, movies, containerList, type) {
     for (var i = 0; i < movies.length; i++) {
         var item = movies[i];
