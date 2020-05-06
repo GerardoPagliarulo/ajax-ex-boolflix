@@ -6,111 +6,116 @@ $(document).ready( function () {
     var title = $('.search-movie');
     var btnSearch = $('.search-button');
     var moviesList = $('.list-movies');
+    // Ref API
+    var seriesApi = {
+                        url: 'https://api.themoviedb.org/3/search/tv',
+                        api_key: 'e99307154c6dfb0b4750f6603256716d',
+                        type: 'Serie Tv'
+                    }
+    var moviesApi = {
+                        url: 'https://api.themoviedb.org/3/search/movie',
+                        api_key: '80c54ac2cd974f9a95b3a7f2c5062e4a',
+                        type: 'Film'
+                    }
     // Init Handlebars
     var source = $('#movie-series-template').html();
     var template = Handlebars.compile(source);
-    // Ricerca film con click su bottone
+    // Ricerca Film e Serie Tv premendo il tasto enter
+    title.keypress(function (e) { 
+        if (e.which == 13) {
+            var query = title.val();
+            showResult(seriesApi, moviesApi, query, title, template, moviesList);
+        }
+    });
+    // Ricerca Film e Serie Tv con click su bottone
     btnSearch.click( function () {
-        if (title.val().trim() !== '') {
-            // Stampa serie tv ricercata
-            searchSeries(template, title, moviesList);
-            // Stampa film ricercato
-            searchMovies(template, title, moviesList);
-        }
-        else {
-            alert('Inserisci un titolo.')
-            title.focus();
-            // Pulizia Input
-            title.val('');
-        }
+        var query = title.val();
+        showResult(seriesApi, moviesApi, query, title, template, moviesList);
     });
 }); // <-- End Doc Ready
 /************
     FUNZIONI
  ************/
-// Funzione: Ottieni e stampa Serie Tv ricercata
-function searchSeries(template, name, containerList) {
-    // Reset risultati delle ricerche precedenti
-    resetList(containerList);
-    // Chiamata Api
-    $.ajax({
-        url: 'https://api.themoviedb.org/3/search/tv',
-        method: 'GET',
-        data: {
-            api_key: 'e99307154c6dfb0b4750f6603256716d',
-            query: name.val(),
-            language: 'it-IT'
-        },
-        success: function (res) {
-            var series = res.results;
-            //console.log(movies);
-            if (series.length > 0) {
-                for (var i = 0; i < series.length; i++) {
-                    var item = series[i];
-                    var content = {
-                        title: item["name"],
-                        originalTitle: item["original_name"],
-                        originalLanguage: languageFlag(item["original_language"]),
-                        averageVote: starVote(item["vote_average"]),
-                        tipo: 'Serie Tv'
-                    };
-                    // Compilare e aggiungere template
-                    var serie = template(content);
-                    containerList.append(serie);
-                }
-            }
-            else {
-                //alert('Titolo non trovato tra la selezione di Serie Tv.');
-                console.log('Titolo non trovato tra la selezione di Serie Tv.');
-                name.select();
-            }
-        },
-        error: function () {
-            console.log('Errore chiamata API');
-        }
-    });
+// Funzione: Mostrare i risultati
+function showResult(seriesApi, moviesApi, query, title, template, moviesList) {
+    if (query.trim() !== '') {
+        // Reset risultati delle ricerche precedenti
+        resetList(moviesList);
+        // Chiamata Api Serie Tv o Film
+        currentApi(seriesApi, query, template, moviesList);
+        currentApi(moviesApi, query, template, moviesList);
+    }
+    else {
+        alert('Inserisci un titolo.')
+        title.focus();
+        // Pulizia Input
+        title.val('');
+    }
 }
-// Funzione: Ottieni e stampa Film ricercato
-function searchMovies(template, title, containerList) {
-    // Reset risultati delle ricerche precedenti
-    resetList(containerList);
-    // Chiamata Api
-    $.ajax({
-        url: 'https://api.themoviedb.org/3/search/movie',
-        method: 'GET',
-        data: {
-            api_key: '80c54ac2cd974f9a95b3a7f2c5062e4a',
-            query: title.val(),
-            language: 'it-IT'
-        },
-        success: function (res) {
-            var movies = res.results;
-            //console.log(movies);
-            if (movies.length > 0) {
-                for (var i = 0; i < movies.length; i++) {
-                    var item = movies[i];
-                    var content = {
-                        title: item["title"],
-                        originalTitle: item["original_title"],
-                        originalLanguage: languageFlag(item["original_language"]),
-                        averageVote: starVote(item["vote_average"]),
-                        tipo: 'Film'
-                    };
-                    // Compilare e aggiungere template
-                    var movie = template(content);
-                    containerList.append(movie);
+// Funzione: Selezionare Api corretta
+function currentApi(myApi, query, template, moviesList) {
+        $.ajax({
+            url: myApi.url,
+            method: 'GET',
+            data: {
+                api_key: myApi.api_key,
+                query: query,
+                language: 'it-IT'
+            },
+            success: function (res) {
+                var movies = res.results;
+                //console.log(movies);
+                if (movies.length > 0) {
+                    templatePrint(template, movies, moviesList, myApi.type);
                 }
+                else {
+                    //alert('Titolo non trovato tra la selezione di Film.');
+                    console.log('Titolo non trovato.');
+                }
+            },
+            error: function () {
+                console.log('Errore chiamata API');
             }
-            else {
-                //alert('Titolo non trovato tra la selezione di Film.');
-                console.log('Titolo non trovato tra la selezione di Film.');
-                title.select();
-            }
-        },
-        error: function () {
-            console.log('Errore chiamata API');
+        });
+    }    
+// Funzione: Ottenere dati templste e stampare template
+function templatePrint(template, movies, containerList, type) {
+    for (var i = 0; i < movies.length; i++) {
+        var item = movies[i];
+        // Variazione del contenuto del template per Film o Serie Tv
+        var title, originalTitle;
+        if ( type == 'Film') {
+            title = item["title"];
+            originalTitle = item["original_title"];
         }
-    });
+        else if ( type == 'Serie Tv') {
+            title = item["name"];
+            originalTitle = item["original_name"];
+        }
+        // Contenuto del Template
+        var content = {
+            title: title,
+            originalTitle: originalTitle,
+            originalLanguage: languageFlag(item["original_language"]),
+            averageVote: starVote(item["vote_average"]),
+            type: type,
+            posterPath: posterImage(item["poster_path"])
+        };
+        // Compilare e aggiungere template
+        var movie = template(content);
+        containerList.append(movie);
+    }
+}
+// Funzione: Aggiungere il Poster del titolo cercato
+function posterImage(param) {
+    if (param !== null) {
+        var poster = 'https://image.tmdb.org/t/p/w342/' + param;
+        return poster;
+    }
+    else if (param == null) {
+        var noPoster = 'img/no-poster.png';
+        return noPoster;
+    }
 }
 // Funzione: Reset risultati delle ricerche precedenti
 function resetList(element) {
@@ -136,13 +141,13 @@ function starVote(num) {
 }
 // Funzione: Assegnazione bandiere italiana e inglese
 function languageFlag(param) {
-    if (param === 'it') {
-        return '<img class="flag" src="img/it.svg" alt="Italin Flag">';
+    var languages = [
+        'en',
+        'it'
+    ];
+    if (languages.includes(param)) {
+        var flag = '<img src="img/' + param + '.svg" alt="Flag Image" class="flag"/>';
+        return flag;
     }
-    else if (param === 'en') {
-        return '<img class="flag" src="img/en.svg" alt="English Flag">';
-    }
-    else {
-        return param;
-    }
+    return param;
 }

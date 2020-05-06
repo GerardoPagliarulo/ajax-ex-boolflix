@@ -1,4 +1,80 @@
-/* MOvie */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+/* UTILITIES */
+.header-style {
+    flex-basis: 10vh;
+    background: #000;
+}
+
+.main-style {
+    flex-basis: 90vh;
+    flex-grow: 1;
+    flex-shrink: 0;
+    background: #555;
+}
+
+/* LAYOUT */
+.container {
+    width: 1070px;
+    margin: 0 auto;
+    font-family: 'Roboto', sans-serif;
+} 
+
+/* HEADER */
+.header-menu {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 28px;
+}
+
+.header-menu .name-site {
+    color: rgb(255, 0, 0);
+}
+
+.search-options {
+    line-height: 20px;
+}
+
+.search-options .search-movie {
+    padding: 3px;
+    border: 0;
+    border-radius: 4px;
+}
+
+.search-options .search-button {
+    padding: 3px;
+    border: 0;
+    border-radius: 4px;
+}
+
+/* MAIN CONTENT */
+.list-movies {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 45px;
+}
+
+/* TEMPLATE */
+/* Movie and Series */
+.movie-series {
+    flex-basis: 25%;
+    margin-right: 14px;
+}
+
+.movie-series ul {
+    list-style: none;
+}
+
 .movie-series .icon {
     color: #000;
 }
