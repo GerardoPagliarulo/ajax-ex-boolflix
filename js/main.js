@@ -9,7 +9,7 @@ $(document).ready( function () {
     // APIs
     var seriesApi = {
                         url: 'https://api.themoviedb.org/3/search/tv',
-                        api_key: 'e99307154c6dfb0b4750f6603256716d',
+                        api_key: '80c54ac2cd974f9a95b3a7f2c5062e4a',
                         type: 'Serie Tv'
                     }
     var moviesApi = {
