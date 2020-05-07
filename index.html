@@ -36,35 +36,36 @@
 
         <!-- TEMPLATE HANDLEBARS -->
         <script id="movie-series-template" type="text/x-handlebars-template">
-            <div class="movie-series pos-rel mrg-bottom-25">
-                <div class="overlay"></div>
+            <div class="movie-series pos-rel">
                 <img src="{{{posterPath}}}" alt="Poster" class="poster">
-                <ul class="description disp-none">
-                    <li>
-                        <span class="paragraph-title">Titolo:</span>
-                        <span>{{title}}</span>
-                    </li>
-                    <li>
-                        <span class="paragraph-title">Titolo originale:</span>
-                        <span>{{originalTitle}}</span>
-                    </li>
-                    <li>
-                        <span class="paragraph-title">Lingua originale:</span>
-                        {{{originalLanguage}}}
-                    </li>
-                    <li>
-                        <span class="paragraph-title">Voto:</span> 
-                        <a href="#" class="icon">{{{averageVote}}}</a> 
-                    </li>
-                    <li>
-                        <span class="paragraph-title">Tipo:</span>
-                        <span>{{type}}</span> 
-                    </li>
-                    <li>
-                        <span class="paragraph-title">Overview:</span>
-                        <sapn>{{overview}}...</sapn> 
-                    </li>
-                </ul>
+                <div class="overlay">
+                    <ul class="description">
+                        <li>
+                            <span class="paragraph-title">Titolo:</span>
+                            <span>{{title}}</span>
+                        </li>
+                        <li>
+                            <span class="paragraph-title">Titolo originale:</span>
+                            <span>{{originalTitle}}</span>
+                        </li>
+                        <li>
+                            <span class="paragraph-title">Lingua originale:</span>
+                            {{{originalLanguage}}}
+                        </li>
+                        <li>
+                            <span class="paragraph-title">Voto:</span> 
+                            <a href="#" class="icon">{{{averageVote}}}</a> 
+                        </li>
+                        <li>
+                            <span class="paragraph-title">Tipo:</span>
+                            <span>{{type}}</span> 
+                        </li>
+                        <li>
+                            <span class="paragraph-title">Overview:</span>
+                            <sapn>{{overview}}</sapn> 
+                        </li>
+                    </ul>
+                </div>
             </div>
         </script>
     

@@ -23,34 +23,32 @@ $(document).ready( function () {
     // Ricerca Film e Serie Tv premendo il tasto enter
     title.keypress(function (e) { 
         if (e.which == 13) {
-            var query = title.val();
-            showResult(seriesApi, moviesApi, query, title, template, moviesList);
+            showResult(seriesApi, moviesApi, title, template, moviesList);
         }
     });
     // Ricerca Film e Serie Tv con click su bottone
     btnSearch.click( function () {
-        var query = title.val();
-        showResult(seriesApi, moviesApi, query, title, template, moviesList);
+        showResult(seriesApi, moviesApi, title, template, moviesList);
     });
     // Hover sulle card e mostrare la descrizione
-    $('body').on('mouseenter', '.movie-series', function() {
-            $('.description', this).removeClass('disp-none');
-    });
-    $('body').on('mouseleave', '.movie-series', function() {
-        $('.description', this).addClass('disp-none');
-    });
+    //$('body').on('mouseenter', '.movie-series', function() {
+            //$('.description', this).removeClass('disp-none');
+    //});
+    //$('body').on('mouseleave', '.movie-series', function() {
+        //$('.description', this).addClass('disp-none');
+    //});
 }); // <-- End Doc Ready
 /************
     FUNZIONI
  ************/
 // Funzione: Mostrare i risultati
-function showResult(seriesApi, moviesApi, query, title, template, moviesList) {
-    if (query.trim() !== '') {
+function showResult(seriesApi, moviesApi, title, template, moviesList) {
+    if (title.val().trim() !== '') {
         // Reset risultati delle ricerche precedenti
         resetList(moviesList);
         // Chiamata Api Serie Tv o Film
-        currentApi(seriesApi, query, template, moviesList);
-        currentApi(moviesApi, query, template, moviesList);
+        currentApi(seriesApi, title, template, moviesList);
+        currentApi(moviesApi, title, template, moviesList);
     }
     else {
         alert('Inserisci un titolo.')
@@ -60,13 +58,13 @@ function showResult(seriesApi, moviesApi, query, title, template, moviesList) {
     }
 }
 // Funzione: Selezionare Api
-function currentApi(myApi, query, template, moviesList) {
+function currentApi(myApi, title, template, moviesList) {
         $.ajax({
             url: myApi.url,
             method: 'GET',
             data: {
                 api_key: myApi.api_key,
-                query: query,
+                query: title.val(),
                 language: 'it-IT'
             },
             success: function (res) {
@@ -77,7 +75,7 @@ function currentApi(myApi, query, template, moviesList) {
                 }
                 else {
                     //alert('Titolo non trovato tra la selezione di Film.');
-                    console.log('Titolo non trovato.');
+                    console.log('Titolo non trovato nella categoria ' + myApi.type);
                 }
             },
             error: function () {
@@ -107,7 +105,7 @@ function templatePrint(template, movies, containerList, type) {
             averageVote: starVote(item["vote_average"]),
             type: type,
             posterPath: posterImage(item["poster_path"]),
-            overview: item["overview"].substr(0, 100)
+            overview: item["overview"].substr(0, 100) + '...'
         };
         // Compilare e aggiungere template
         var movie = template(content);
@@ -116,14 +114,12 @@ function templatePrint(template, movies, containerList, type) {
 }
 // Funzione: Aggiungere il Poster del titolo cercato
 function posterImage(param) {
-    if (param !== null) {
+    var noPoster = 'img/no-poster.png';
+    if (param) {
         var poster = 'https://image.tmdb.org/t/p/w342/' + param;
         return poster;
     }
-    else if (param == null) {
-        var noPoster = 'img/no-poster.png';
-        return noPoster;
-    }
+    return noPoster;
 }
 // Funzione: Reset risultati delle ricerche precedenti
 function resetList(element) {

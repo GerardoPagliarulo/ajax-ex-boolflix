@@ -10,16 +10,12 @@ body {
 }
 
 /* UTILITIES */
-.disp-none {
+/* .disp-none {
     display: none;
-}
+} */ 
 
 .pos-rel {
     position: relative;
-}
-
-.mrg-bottom-25 {
-    margin-bottom: 25px;
 }
 
 .header-style {
@@ -45,7 +41,8 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-top: 28px;
+    padding-top: 25px;
+    padding-bottom: 10px;
 }
 
 .header-menu .name-site {
@@ -57,13 +54,13 @@ body {
 }
 
 .search-options .search-movie {
-    padding: 3px;
+    padding: 3px 7px;
     border: 0;
     border-radius: 4px;
 }
 
 .search-options .search-button {
-    padding: 3px;
+    padding: 3px 7px;
     border: 0;
     border-radius: 4px;
     cursor: pointer;
@@ -76,6 +73,7 @@ body {
 /* MAIN CONTENT */
 .list-movies {
     display: flex;
+    justify-content: center;
     flex-wrap: wrap;
     margin-top: 45px;
 }
@@ -84,12 +82,10 @@ body {
 /* Movie and Series */
 .movie-series {
     flex-basis: 23%;
-    margin-right: 21px;
-}
-
-.movie-series {
-    flex-basis: 23%;
-    margin-right: 21px;
+    height: 340px;
+    margin: 10px;
+    /* margin-right: 21px;
+    margin-bottom: 45px; */
 }
 
 .overlay {
@@ -101,19 +97,18 @@ body {
     height: 100%;
     width: 100%;
     opacity: 0;
-    transition: .5s;
+    transition: .6s;
     background-color: rgb(14, 7, 7, .8);
+}
+
+.movie-series:hover .overlay {
+    opacity: 1;
+    cursor: pointer;
 }
 
 .movie-series .poster {
     width: 100%;
     height: 100%;
-    object-fit: cover;
-}
-
-.movie-series:hover .overlay{
-    opacity: 1;
-    cursor: pointer;
 }
 
 .movie-series .description {
@@ -123,7 +118,6 @@ body {
     padding: 10px;
     list-style: none;
     color: #fff;
-    cursor: pointer;
 }
 
 .movie-series .paragraph-title {
