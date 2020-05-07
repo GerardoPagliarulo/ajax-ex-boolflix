@@ -43,9 +43,9 @@ $(document).ready( function () {
  ************/
 // Funzione: Mostrare i risultati
 function showResult(seriesApi, moviesApi, title, template, moviesList) {
+    // Reset risultati delle ricerche precedenti
+    resetList(moviesList);
     if (title.val().trim() !== '') {
-        // Reset risultati delle ricerche precedenti
-        resetList(moviesList);
         // Chiamata Api Serie Tv o Film
         currentApi(seriesApi, title, template, moviesList);
         currentApi(moviesApi, title, template, moviesList);
