@@ -19,7 +19,7 @@ $(document).ready( function () {
     btnSearch.click( function () {
         showResult(title, template, moviesList);
     });
-    // Hover sulle card e mostrare la descrizione
+    // Hover sulle card per mostrare la descrizione
     //$('body').on('mouseenter', '.movie-series', function() {
             //$('.description', this).removeClass('disp-none');
     //});
@@ -37,7 +37,7 @@ function showResult(title, template, moviesList) {
     var apiKey = '80c54ac2cd974f9a95b3a7f2c5062e4a';
     var language = 'it-IT';
     if (title.val().trim() !== '') {
-        // Chiamata Api Serie Tv
+        // Chiamata Serie Tv
         var seriesApi = {
             url: 'https://api.themoviedb.org/3/search/tv',
             api_key: apiKey,
@@ -61,7 +61,7 @@ function showResult(title, template, moviesList) {
         title.val('');
     }
 }
-// Funzione: Selezionare Api
+// Funzione: Chiamata Api
 function currentApi(myApi, title, template, moviesList) {
         $.ajax({
             url: myApi.url,

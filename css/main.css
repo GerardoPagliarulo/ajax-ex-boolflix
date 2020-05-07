@@ -18,17 +18,6 @@ body {
     position: relative;
 }
 
-.header-style {
-    flex-basis: 10vh;
-    background: #000;
-}
-
-.main-style {
-    flex-basis: 90vh;
-    flex-grow: 1;
-    background: #555;
-}
-
 /* LAYOUT */
 .container {
     width: 1070px;
@@ -37,6 +26,11 @@ body {
 } 
 
 /* HEADER */
+.header-style {
+    flex-basis: 10vh;
+    background: #000;
+}
+
 .header-menu {
     display: flex;
     justify-content: space-between;
@@ -49,7 +43,7 @@ body {
     color: rgb(255, 0, 0);
 }
 
-.search-options {
+.header-menu .search-options {
     line-height: 20px;
 }
 
@@ -71,6 +65,13 @@ body {
 }
 
 /* MAIN CONTENT */
+.main-style {
+    flex-basis: 90vh;
+    flex-grow: 1;
+    background: #555;
+    overflow-y: auto;
+}
+
 .list-movies {
     display: flex;
     justify-content: center;
