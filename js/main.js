@@ -6,29 +6,18 @@ $(document).ready( function () {
     var title = $('.search-movie');
     var btnSearch = $('.search-button');
     var moviesList = $('.list-movies');
-    // APIs
-    var seriesApi = {
-                        url: 'https://api.themoviedb.org/3/search/tv',
-                        api_key: '80c54ac2cd974f9a95b3a7f2c5062e4a',
-                        type: 'Serie Tv'
-                    }
-    var moviesApi = {
-                        url: 'https://api.themoviedb.org/3/search/movie',
-                        api_key: '80c54ac2cd974f9a95b3a7f2c5062e4a',
-                        type: 'Film'
-                    }
     // Init Handlebars
     var source = $('#movie-series-template').html();
     var template = Handlebars.compile(source);
     // Ricerca Film e Serie Tv premendo il tasto enter
     title.keypress(function (e) { 
         if (e.which == 13) {
-            showResult(seriesApi, moviesApi, title, template, moviesList);
+            showResult(title, template, moviesList);
         }
     });
     // Ricerca Film e Serie Tv con click su bottone
     btnSearch.click( function () {
-        showResult(seriesApi, moviesApi, title, template, moviesList);
+        showResult(title, template, moviesList);
     });
     // Hover sulle card e mostrare la descrizione
     //$('body').on('mouseenter', '.movie-series', function() {
@@ -42,12 +31,27 @@ $(document).ready( function () {
     FUNZIONI
  ************/
 // Funzione: Mostrare i risultati
-function showResult(seriesApi, moviesApi, title, template, moviesList) {
+function showResult(title, template, moviesList) {
     // Reset risultati delle ricerche precedenti
     resetList(moviesList);
+    var apiKey = '80c54ac2cd974f9a95b3a7f2c5062e4a';
+    var language = 'it-IT';
     if (title.val().trim() !== '') {
-        // Chiamata Api Serie Tv o Film
+        // Chiamata Api Serie Tv
+        var seriesApi = {
+            url: 'https://api.themoviedb.org/3/search/tv',
+            api_key: apiKey,
+            language: language,
+            type: 'Serie Tv'
+        }
         currentApi(seriesApi, title, template, moviesList);
+        // Chiamata Film
+        var moviesApi = {
+            url: 'https://api.themoviedb.org/3/search/movie',
+            api_key: apiKey,
+            language: language,
+            type: 'Film'
+        }
         currentApi(moviesApi, title, template, moviesList);
     }
     else {
@@ -65,7 +69,7 @@ function currentApi(myApi, title, template, moviesList) {
             data: {
                 api_key: myApi.api_key,
                 query: title.val(),
-                language: 'it-IT'
+                language: myApi.language
             },
             success: function (res) {
                 var movies = res.results;
